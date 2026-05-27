@@ -78,33 +78,67 @@
       padding: 16px;
     }
     .spinner-wrap {
-      background: #eef3ff;
+      background: linear-gradient(180deg, #eef3ff 0%, #f8fbff 100%);
       border-radius: 18px;
-      padding: 24px;
+      padding: 18px;
       margin: 14px 0;
+      min-height: 190px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
-      text-align: center;
-    }
-    .spinner-dice {
-      width: 78px;
-      height: 78px;
-      border-radius: 18px;
-      background: white;
-      border: 4px solid #23366f;
-      color: #23366f;
-      display: flex;
-      align-items: center;
       justify-content: center;
-      font-size: 38px;
-      font-weight: 900;
-      box-shadow: 0 14px 26px rgba(35, 54, 111, 0.22);
-      animation: spinDice 0.45s linear infinite;
+      gap: 10px;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
     }
-    @keyframes spinDice {
-      0% { transform: rotate(0deg) scale(1); }
+    .dice-runway {
+      width: 100%;
+      height: 118px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid #dce3f5;
+    }
+    .rolling-dice {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      object-fit: contain;
+      filter: drop-shadow(0 12px 14px rgba(35, 54, 111, 0.28));
+      animation: diceRoll 0.7s ease-in-out infinite;
+    }
+    .rolling-dice.cube-img {
+      width: 86px;
+      height: 86px;
+    }
+    .rolling-dice.cuboid-img {
+      width: 154px;
+      height: 94px;
+    }
+    .bounce-mark {
+      position: absolute;
+      bottom: 14px;
+      width: 54px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(35, 54, 111, 0.16);
+      animation: shadowPulse 0.7s ease-in-out infinite;
+    }
+    @keyframes diceRoll {
+      0% { transform: translate(-190%, -54%) rotate(-28deg) scale(0.9); }
+      35% { transform: translate(-45%, -75%) rotate(160deg) scale(1.08); }
+      70% { transform: translate(105%, -48%) rotate(330deg) scale(0.96); }
+      100% { transform: translate(-190%, -54%) rotate(690deg) scale(0.9); }
+    }
+    @keyframes shadowPulse {
+      0% { left: 20%; transform: scaleX(0.65); opacity: 0.25; }
+      35% { left: 46%; transform: scaleX(1.05); opacity: 0.15; }
+      70% { left: 68%; transform: scaleX(0.85); opacity: 0.25; }
+      100% { left: 20%; transform: scaleX(0.65); opacity: 0.25; }
+    }
       50% { transform: rotate(180deg) scale(1.08); }
       100% { transform: rotate(360deg) scale(1); }
     }
@@ -192,7 +226,13 @@
           <label for="cubeAddCount">추가로 몇 번 던질까요?</label>
           <input id="cubeAddCount" type="number" min="1" max="10000" placeholder="예: 10, 90, 400">
           <div class="btn-row"><button id="runCubeAddBtn">입력한 횟수만큼 시행</button></div>
-          <div id="cubeSpinner" class="spinner-wrap hidden"><div class="spinner-dice">?</div><strong>정육면체 주사위를 던지는 중...</strong></div>
+          <div id="cubeSpinner" class="spinner-wrap hidden">
+            <div class="dice-runway">
+              <img class="rolling-dice cube-img" src="./dice-cube.png" alt="굴러가는 정육면체 주사위">
+              <div class="bounce-mark"></div>
+            </div>
+            <strong>정육면체 주사위를 던지는 중...</strong>
+          </div>
           <h3>현재 도수</h3>
           <div id="cubeCountGrid" class="count-grid"></div>
           
@@ -247,7 +287,13 @@
           <label for="cuboidAddCount">추가로 몇 번 던질까요?</label>
           <input id="cuboidAddCount" type="number" min="1" max="10000" placeholder="예: 10, 90, 400">
           <div class="btn-row"><button id="runCuboidAddBtn">입력한 횟수만큼 시행</button></div>
-          <div id="cuboidSpinner" class="spinner-wrap hidden"><div class="spinner-dice">?</div><strong>직육면체 주사위를 던지는 중...</strong></div>
+          <div id="cuboidSpinner" class="spinner-wrap hidden">
+            <div class="dice-runway">
+              <img class="rolling-dice cuboid-img" src="./dice-cuboid.png" alt="굴러가는 직육면체 주사위">
+              <div class="bounce-mark"></div>
+            </div>
+            <strong>직육면체 주사위를 던지는 중...</strong>
+          </div>
           <h3>현재 도수</h3>
           <div id="cuboidCountGrid" class="count-grid"></div>
           
