@@ -156,7 +156,7 @@
 <body>
   <header>
     <h1>정육면체와 직육면체 주사위 확률 실험</h1>
-    <p>시행 횟수를 누적하며 상대도수를 직접 구하고, 두 주사위의 결과를 비교합니다.</p>
+    <p>던진 횟수를 누적하며 선택한 숫자의 도수와 상대도수를 직접 구하고, 두 주사위의 결과를 비교합니다.</p>
   </header>
 
   <main>
@@ -167,12 +167,10 @@
       <span class="step-pill">4. 최종 정리</span>
     </div>
 
-
-    
     <section id="pageIntro" class="page">
       <h2>1. 전체 실험 개요</h2>
       <div class="guide">
-        이 활동은 주사위를 한 번에 많이 던지는 것이 아니라, 1차·2차·3차로 나누어 시행 횟수를 누적합니다. 각 단계에서 나온 도수를 보고 상대도수를 분수로 직접 적어 봅니다.
+        이 활동은 주사위를 한 번에 많이 던지는 것이 아니라, 1차·2차·3차로 나누어 던진 횟수를 누적합니다. 각 단계에서 관심 있는 숫자 하나를 선택하고, 그 숫자가 나온 도수와 상대도수를 직접 적어 봅니다.
       </div>
       <div class="grid">
         <div><label for="gradeClass">학년/반</label><input id="gradeClass" placeholder="예: 2학년 3반"></div>
@@ -190,19 +188,14 @@
         <div class="experiment-box">
           <h3>실험하기</h3>
           <div class="guide">정육면체 주사위는 1~6이 같은 가능성으로 나온다고 가정합니다.</div>
-          <div class="total-box">누적 시행 횟수: <span id="cubeTotal">0</span>회</div>
+          <div class="total-box">던진 횟수: <span id="cubeTotal">0</span>회</div>
           <label for="cubeAddCount">추가로 몇 번 던질까요?</label>
           <input id="cubeAddCount" type="number" min="1" max="10000" placeholder="예: 10, 90, 400">
-          <div class="btn-row">
-            <button data-cube-preset="10">+10회</button>
-            <button data-cube-preset="50">+50회</button>
-            <button data-cube-preset="200">+200회</button>
-          </div>
           <div class="btn-row"><button id="runCubeAddBtn">입력한 횟수만큼 시행</button></div>
           <div id="cubeSpinner" class="spinner-wrap hidden"><div class="spinner-dice">?</div><strong>정육면체 주사위를 던지는 중...</strong></div>
           <h3>현재 도수</h3>
           <div id="cubeCountGrid" class="count-grid"></div>
-          <div class="btn-row"><button class="secondary" id="recordCubeBtn">현재 결과를 활동지에 기록</button></div>
+          
         </div>
 
         <div id="cubeCapture" class="worksheet">
@@ -215,18 +208,21 @@
             <textarea id="cubePrediction"></textarea>
           </div>
           <h3>실험 결과 기록</h3>
-          <div class="small">각 차수의 결과를 기록한 뒤, 1~6의 상대도수를 분수로 직접 입력하세요.</div>
+          <div class="small">각 차수마다 원하는 숫자 1개를 고르고, 그 숫자가 나온 도수와 상대도수를 직접 입력하세요.</div>
           <table>
             <thead>
               <tr>
-                <th>차수</th><th>누적 시행횟수</th><th>도수</th>
-                <th>1 상대도수</th><th>2 상대도수</th><th>3 상대도수</th><th>4 상대도수</th><th>5 상대도수</th><th>6 상대도수</th>
+                <th>차수</th>
+                <th>던진 횟수</th>
+                <th>선택한 숫자</th>
+                <th>선택한 숫자의 도수</th>
+                <th>상대도수</th>
               </tr>
             </thead>
             <tbody id="cubeWorksheetBody"></tbody>
           </table>
           <div class="question-box">
-            <strong>정리</strong> 시행 횟수가 늘어날수록 상대도수는 어떻게 변했나요?
+            <strong>정리</strong> 던진 횟수가 늘어날수록 상대도수는 어떻게 변했나요?
             <textarea id="cubeReflection"></textarea>
           </div>
         </div>
@@ -243,19 +239,14 @@
         <div class="experiment-box">
           <h3>실험하기</h3>
           <div class="guide">직육면체 주사위는 정육면체 2개를 붙인 2:1:1 모양으로 가정합니다. 1과 6은 좁은 면이라 덜 나오고, 2·3·4·5는 넓은 면이라 더 잘 나온다고 가정합니다.</div>
-          <div class="total-box">누적 시행 횟수: <span id="cuboidTotal">0</span>회</div>
+          <div class="total-box">던진 횟수: <span id="cuboidTotal">0</span>회</div>
           <label for="cuboidAddCount">추가로 몇 번 던질까요?</label>
           <input id="cuboidAddCount" type="number" min="1" max="10000" placeholder="예: 10, 90, 400">
-          <div class="btn-row">
-            <button data-cuboid-preset="10">+10회</button>
-            <button data-cuboid-preset="50">+50회</button>
-            <button data-cuboid-preset="200">+200회</button>
-          </div>
           <div class="btn-row"><button id="runCuboidAddBtn">입력한 횟수만큼 시행</button></div>
           <div id="cuboidSpinner" class="spinner-wrap hidden"><div class="spinner-dice">?</div><strong>직육면체 주사위를 던지는 중...</strong></div>
           <h3>현재 도수</h3>
           <div id="cuboidCountGrid" class="count-grid"></div>
-          <div class="btn-row"><button class="secondary" id="recordCuboidBtn">현재 결과를 활동지에 기록</button></div>
+          
         </div>
 
         <div id="cuboidCapture" class="worksheet">
@@ -268,12 +259,15 @@
             <textarea id="cuboidPrediction"></textarea>
           </div>
           <h3>실험 결과 기록</h3>
-          <div class="small">각 차수의 결과를 기록한 뒤, 1~6의 상대도수를 분수로 직접 입력하세요.</div>
+          <div class="small">각 차수마다 원하는 숫자 1개를 고르고, 그 숫자가 나온 도수와 상대도수를 직접 입력하세요.</div>
           <table>
             <thead>
               <tr>
-                <th>차수</th><th>누적 시행횟수</th><th>도수</th>
-                <th>1 상대도수</th><th>2 상대도수</th><th>3 상대도수</th><th>4 상대도수</th><th>5 상대도수</th><th>6 상대도수</th>
+                <th>차수</th>
+                <th>던진 횟수</th>
+                <th>선택한 숫자</th>
+                <th>선택한 숫자의 도수</th>
+                <th>상대도수</th>
               </tr>
             </thead>
             <tbody id="cuboidWorksheetBody"></tbody>
@@ -296,7 +290,7 @@
           <h2>4. 최종 정리</h2>
           <div id="finalStudent" class="student-info"></div>
         </div>
-        <div class="guide">정육면체와 직육면체 주사위 실험의 최종 누적 결과를 비교해 봅시다.</div>
+        <div class="guide">정육면체와 직육면체 주사위 실험의 최종 결과를 비교해 봅시다.</div>
         <div class="final-summary-grid">
           <div>
             <h3>정육면체 최종 도수</h3>
@@ -330,7 +324,7 @@
 
     let cubeCounts = [0,0,0,0,0,0], cuboidCounts = [0,0,0,0,0,0];
     let cubeTotal = 0, cuboidTotal = 0;
-    let cubeRecordNo = 0, cuboidRecordNo = 0;
+    
 
     function $(id) { return document.getElementById(id); }
 
@@ -363,13 +357,8 @@
     $('goFinalBtn').onclick = () => { renderFinal(); goPage(3); };
     $('restartBtn').onclick = () => location.reload();
 
-    document.querySelectorAll('[data-cube-preset]').forEach(btn => btn.onclick = () => $('cubeAddCount').value = btn.dataset.cubePreset);
-    document.querySelectorAll('[data-cuboid-preset]').forEach(btn => btn.onclick = () => $('cuboidAddCount').value = btn.dataset.cuboidPreset);
-
     $('runCubeAddBtn').onclick = () => runAdd('cube');
     $('runCuboidAddBtn').onclick = () => runAdd('cuboid');
-    $('recordCubeBtn').onclick = () => recordWorksheet('cube');
-    $('recordCuboidBtn').onclick = () => recordWorksheet('cuboid');
 
     $('downloadCubeBtn').onclick = () => downloadImage('cubeCapture', '정육면체_활동지');
     $('downloadCuboidBtn').onclick = () => downloadImage('cuboidCapture', '직육면체_활동지');
@@ -403,6 +392,7 @@
       $(inputId).value = '';
       updateTotals();
       renderCountGrid(type === 'cube' ? 'cubeCountGrid' : 'cuboidCountGrid', type === 'cube' ? cubeCounts : cuboidCounts, type === 'cube' ? cubeTotal : cuboidTotal);
+      updateWorksheetAfterRun(type);
     }
 
     function cubeResult() { return Math.floor(Math.random() * 6) + 1; }
@@ -433,41 +423,41 @@
       });
     }
 
-    function countsText(counts) {
-      return counts.map((c, i) => `${i + 1}: ${c}회`).join('\n');
-    }
-
     function initWorksheet(bodyId, prefix) {
       const body = $(bodyId);
       body.innerHTML = '';
       for (let row = 1; row <= 3; row++) {
         const tr = document.createElement('tr');
         tr.id = `${prefix}Row${row}`;
-        tr.innerHTML = `<td>${row}차</td><td class="trial-total">-</td><td class="counts-text">-</td>` +
-          Array.from({length: 6}, (_, i) => `<td class="freq-cell"><div class="fraction"><input type="number" min="0" placeholder="분자"><div class="fraction-line"></div><input type="number" min="1" placeholder="분모"></div></td>`).join('');
+        tr.innerHTML = `
+          <td>${row}차</td>
+          <td class="trial-total">-</td>
+          <td>
+            <input class="chosen-face" type="number" min="1" max="6" placeholder="1~6">
+          </td>
+          <td>
+            <input class="chosen-count" type="number" min="0" placeholder="도수">
+          </td>
+          <td class="freq-cell">
+            <div class="fraction">
+              <input type="number" min="0" placeholder="분자">
+              <div class="fraction-line"></div>
+              <input type="number" min="1" placeholder="분모">
+            </div>
+          </td>
+        `;
         body.appendChild(tr);
       }
     }
 
-    function recordWorksheet(type) {
-      const isCube = type === 'cube';
-      const total = isCube ? cubeTotal : cuboidTotal;
-      const counts = isCube ? cubeCounts : cuboidCounts;
-      if (total === 0) { alert('먼저 실험을 시행해 주세요.'); return; }
+    function updateWorksheetAfterRun(type) {
+      const prefix = type === 'cube' ? 'cube' : 'cuboid';
+      const total = type === 'cube' ? cubeTotal : cuboidTotal;
+      const rows = [1, 2, 3].map(n => $(`${prefix}Row${n}`));
 
-      let recordNo = isCube ? cubeRecordNo + 1 : cuboidRecordNo + 1;
-      if (recordNo > 3) {
-        alert('활동지 기록은 3차까지 가능합니다. 다시 기록하려면 새로고침 후 다시 시작해 주세요.');
-        return;
-      }
-
-      const prefix = isCube ? 'cube' : 'cuboid';
-      const row = $(`${prefix}Row${recordNo}`);
-      row.querySelector('.trial-total').textContent = `${total}회`;
-      row.querySelector('.counts-text').textContent = countsText(counts);
-
-      if (isCube) cubeRecordNo = recordNo;
-      else cuboidRecordNo = recordNo;
+      const targetRow = rows.find(row => row.querySelector('.trial-total').textContent === '-');
+      if (!targetRow) return;
+      targetRow.querySelector('.trial-total').textContent = `${total}회`;
     }
 
     function renderFinal() {
@@ -481,9 +471,11 @@
       const cuboidWide = cuboidCounts[1] + cuboidCounts[2] + cuboidCounts[3] + cuboidCounts[4];
 
       $('finalCompareText').textContent =
-        `정육면체 누적 시행 횟수: ${cubeTotal}회\n` +
+        `정육면체 던진 횟수: ${cubeTotal}회
+` +
         `정육면체 1·6 총횟수: ${cubeNarrow}회 / 2·3·4·5 총횟수: ${cubeWide}회\n\n` +
-        `직육면체 누적 시행 횟수: ${cuboidTotal}회\n` +
+        `직육면체 던진 횟수: ${cuboidTotal}회
+` +
         `직육면체 1·6 총횟수: ${cuboidNarrow}회 / 2·3·4·5 총횟수: ${cuboidWide}회\n\n` +
         `직육면체에서 좁은 면인 1과 6이 정육면체보다 상대적으로 적게 나오는지 비교해 봅시다.`;
     }
