@@ -258,7 +258,6 @@
               <tr>
                 <th>차수</th>
                 <th>던진 횟수</th>
-                <th>선택한 숫자</th>
                 <th>선택한 숫자가 나온 횟수</th>
                 <th>상대도수</th>
               </tr>
@@ -319,7 +318,6 @@
               <tr>
                 <th>차수</th>
                 <th>던진 횟수</th>
-                <th>선택한 숫자</th>
                 <th>선택한 숫자가 나온 횟수</th>
                 <th>상대도수</th>
               </tr>
@@ -442,7 +440,7 @@
 
       const spinner = type === 'cube' ? $('cubeSpinner') : $('cuboidSpinner');
       spinner.classList.remove('hidden');
-      await wait(650);
+      await wait(1300);
 
       for (let i = 0; i < n; i++) {
         const result = type === 'cube' ? cubeResult() : cuboidResult();
@@ -490,16 +488,15 @@
         tr.id = `${prefix}Row${row}`;
         tr.innerHTML = `
           <td>${row}차</td>
-          <td><input class="trial-total-input" type="number" min="1" placeholder="직접 입력"></td>
-          <td class="chosen-face-display">-</td>
+          <td><input class="trial-total-input" type="number" min="1"></td>
           <td>
-            <input class="chosen-count" type="number" min="0" placeholder="도수">
+            <input class="chosen-count" type="number" min="0">
           </td>
           <td class="freq-cell">
             <div class="fraction">
-              <input type="number" min="0" placeholder="기약분수 분자">
+              <input type="number" min="0">
               <div class="fraction-line"></div>
-              <input type="number" min="1" placeholder="기약분수 분모">
+              <input type="number" min="1">
             </div>
           </td>
         `;
@@ -508,16 +505,7 @@
     }
 
     function updateWorksheetAfterRun(type) {
-      const prefix = type === 'cube' ? 'cube' : 'cuboid';
-      const chosenNumber = type === 'cube'
-        ? $('cubeChosenNumber').value
-        : $('cuboidChosenNumber').value;
-
-      const rows = [1, 2, 3].map(n => $(`${prefix}Row${n}`));
-      const targetRow = rows.find(row => row.querySelector('.chosen-face-display').textContent === '-');
-      if (!targetRow) return;
-
-      targetRow.querySelector('.chosen-face-display').textContent = chosenNumber || '-';
+      // 활동지의 던진 횟수, 선택한 숫자가 나온 횟수, 상대도수는 학생이 직접 입력합니다.
     }
 
     function renderFinal() {
