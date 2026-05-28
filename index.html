@@ -176,7 +176,7 @@
     .final-summary-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
 
     /* ----------------------------------------------------
-       교정된 꺾은선 점 그래프(Line-Dot) 시스템 레이아웃
+       차수별 전체 묶음 레이아웃 그래프 디자인
     ------------------------------------------------------- */
     .grand-chart-box {
       background: white;
@@ -213,7 +213,6 @@
       border-radius: 8px;
     }
     
-    /* 0부터 0.4 고정 스케일 프레임 */
     .bars-axis-frame {
       display: flex;
       justify-content: space-around;
@@ -245,20 +244,20 @@
       position: relative;
     }
 
-    /* 점 그래프 컴포넌트 구조 */
+    /* 점 그래프 컴포넌트 */
     .dot-plot-point {
       width: 12px;
       height: 12px;
       border-radius: 50%;
       position: absolute;
       left: 50%;
-      transform: translate(-50%, 50%); /* 중심점 정렬 보정 */
+      transform: translate(-50%, 50%);
       transition: bottom 0.4s ease;
       z-index: 3;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
     }
 
-    /* 점 위에 달라붙는 수치 */
+    /* 점 위에 배치되는 수치 텍스트 */
     .unit-bar-value {
       position: absolute;
       top: -24px; 
@@ -279,7 +278,7 @@
       bottom: -24px;
     }
 
-    /* SVG 연동선 프레임 */
+    /* SVG 연동선 실선 레이어 */
     .svg-line-layer {
       position: absolute;
       top: 0;
@@ -295,7 +294,7 @@
     .cube-theme-chart .dot-plot-point { background-color: #3182ce; }
     
     .cuboid-theme-chart .grand-chart-title { color: #2f855a; }
-    /* 직육면체: 1,6번 눈 보라색 / 2,3,4,5번 눈 초록색 전용 도트 매칭 */
+    /* 직육면체: 1,6번 눈 보라색 / 2,3,4,5번 눈 초록색 */
     .cuboid-theme-chart .dot-idx-1, .cuboid-theme-chart .dot-idx-6 { background-color: #805ad5; width:14px; height:14px; }
     .cuboid-theme-chart .dot-idx-2, .cuboid-theme-chart .dot-idx-3, .cuboid-theme-chart .dot-idx-4, .cuboid-theme-chart .dot-idx-5 { background-color: #38a169; }
 
@@ -573,7 +572,7 @@
 
     function validateStudent() {
       if (!$('gradeClass').value.trim() || !$('groupName').value.trim()) {
-        alert('학년/반과 모둠명(또는 학생명)을 모두 입력해 주세요.');
+        alert('학년/반 and 모둠명(또는 학생명)을 모두 입력해 주세요.');
         return false;
       }
       return true;
@@ -741,14 +740,14 @@
     }
 
     /* ----------------------------------------------------
-       ★ 정밀 교정 점-선 그래프 렌더링 스크립트 엔진 ★
-       축 고정: 바닥 0 -> 꼭대기 0.4 연산 분배 시스템
+       ★ 교정된 점-선 그래프 렌더링 스크립트 엔진 ★
+       1번 눈금 뒤의 잘못된 세로 잔상선 제거 패치 완료
     ------------------------------------------------------- */
     function buildClusterChart(frameId, dataSnapshot) {
       const frame = $(frameId);
       frame.innerHTML = '';
       
-      // 고정 눈금 텍스트 레이블 인입
+      // Y축 눈금 가이드 세팅
       const g0 = document.createElement('div'); g0.className='y-axis-guide'; g0.style.bottom='2px'; g0.textContent='0'; frame.appendChild(g0);
       const g1 = document.createElement('div'); g1.className='y-axis-guide'; g1.style.bottom='60px'; g1.textContent='0.1'; frame.appendChild(g1);
       const g2 = document.createElement('div'); g2.className='y-axis-guide'; g2.style.bottom='120px'; g2.textContent='0.2'; frame.appendChild(g2);
@@ -757,15 +756,12 @@
 
       const total = dataSnapshot.total;
       const counts = dataSnapshot.counts;
-      
-      // 점들의 X, Y 좌표를 추적하여 선으로 연결할 배열
-      let pointsCoordinate = [];
 
       for (let i = 0; i < 6; i++) {
         const count = counts[i];
         const relativeFreq = total > 0 ? (count / total) : 0;
         
-        // 0.4 고정 스케일 공식 대입: (상대도수 / 0.4) * 100%
+        // 0.4 고정 스케일 공식 대입
         const displayHeight = total > 0 ? Math.min((relativeFreq / 0.4) * 100, 100) : 0; 
 
         const unit = document.createElement('div');
@@ -779,7 +775,7 @@
         frame.appendChild(unit);
       }
 
-      // 렌더링 직후 점과 점을 일직선으로 연동하는 SVG 동적 생성 파트
+      // 점과 점 사이만 순수하게 이어주는 고정식 SVG 연동선 빌더
       setTimeout(() => {
         const dots = frame.querySelectorAll('.dot-plot-point');
         if (dots.length === 0 || total === 0) return;
@@ -790,7 +786,6 @@
 
         let pathD = "";
         dots.forEach((dot, index) => {
-          // 부모 프레임 기준 상대 위치 계산
           const x = dot.offsetLeft + (dot.offsetWidth / 2);
           const y = dot.offsetTop + (dot.offsetHeight / 2);
           
@@ -798,12 +793,12 @@
           else pathD += ` L ${x} ${y}`;
         });
 
+        // 꺾은선 스타일 빌드
         const polyline = document.createElementNS("http://www.w3.org/2000/svg", "path");
         polyline.setAttribute("d", pathD);
         polyline.setAttribute("fill", "none");
         polyline.setAttribute("stroke", frame.parentElement.parentElement.classList.contains('cube-theme-chart') ? "#3182ce" : "#38a169");
         polyline.setAttribute("stroke-width", "3");
-        polyline.setAttribute("stroke-dasharray", "1");
         svg.appendChild(polyline);
       }, 50);
     }
