@@ -180,7 +180,7 @@
     .final-summary-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
 
     /* ----------------------------------------------------
-       새롭게 구현한 다중 차수 1~6 눈 전체 묶음 레이아웃 그래프 
+       다중 차수 1~6 눈 전체 묶음 레이아웃 그래프 (스케일 업그레이드)
     ------------------------------------------------------- */
     .grand-chart-box {
       background: white;
@@ -216,19 +216,25 @@
       padding: 6px;
       border-radius: 8px;
     }
+    
+    /* 눈금 프레임 높이를 확보하고 정렬 최적화 */
     .bars-axis-frame {
       display: flex;
       justify-content: space-around;
       align-items: flex-end;
-      height: 180px;
+      height: 240px; /* 기존보다 세로 폭을 대폭 늘려 눈금 격차 시각화 */
       border-bottom: 2px solid #cbd5e0;
       padding-bottom: 4px;
+      background-image: linear-gradient(#e2e8f0 1px, transparent 1px);
+      background-size: 100% 40px; /* 보이지 않는 내부 실선 그리드 보정 */
     }
     .individual-bar-unit {
       display: flex;
       flex-direction: column;
       align-items: center;
       width: 13%;
+      height: 100%;
+      justify-content: flex-end;
       position: relative;
     }
     .unit-bar-pillar {
@@ -237,24 +243,23 @@
       border-top-right-radius: 4px;
       transition: height 0.4s ease;
       position: relative;
-      min-height: 2px;
     }
     .unit-bar-value {
       position: absolute;
-      top: -22px;
-      width: 40px;
+      top: -24px; /* 막대 꼭대기 위로 고정 */
+      width: 44px;
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
-      font-size: 10px;
+      font-size: 11px;
       font-weight: bold;
-      color: #333;
+      color: #2d3748;
     }
     .unit-bar-label {
       margin-top: 6px;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: bold;
-      color: #718096;
+      color: #4a5568;
     }
 
     /* 정육면체 전용 차수별 파스텔 블루 그라데이션 컬러링 */
@@ -266,14 +271,14 @@
     .cube-theme-chart .bar-idx-5 { background: #2b6cb0; }
     .cube-theme-chart .bar-idx-6 { background: #2c5282; }
 
-    /* 직육면체 전용 초록/보라 개성 테마 컬러링 (좁은 면과 넓은 면의 매칭 구분 강화) */
+    /* 직육면체 전용 초록/보라 개성 테마 컬러링 (좁은 면과 넓은 면의 격차가 확 튀도록 보정) */
     .cuboid-theme-chart .grand-chart-title { color: #2f855a; }
-    .cuboid-theme-chart .bar-idx-1 { background: #9f7aea; border: 1px solid #805ad5; } /* 1번 좁은면: 보라 */
-    .cuboid-theme-chart .bar-idx-2 { background: #48bb78; }                           /* 2번 넓은면: 초록 */
-    .cuboid-theme-chart .bar-idx-3 { background: #38a169; }                           /* 3번 넓은면: 초록 */
-    .cuboid-theme-chart .bar-idx-4 { background: #2f855a; }                           /* 4번 넓은면: 초록 */
-    .cuboid-theme-chart .bar-idx-5 { background: #22543d; }                           /* 5번 넓은면: 초록 */
-    .cuboid-theme-chart .bar-idx-6 { background: #b794f4; border: 1px solid #9f7aea; } /* 6번 좁은면: 연보라 */
+    .cuboid-theme-chart .bar-idx-1 { background: #9f7aea; border-top: 2px solid #805ad5; } /* 좁은면 */
+    .cuboid-theme-chart .bar-idx-2 { background: #48bb78; }                               /* 넓은면 */
+    .cuboid-theme-chart .bar-idx-3 { background: #38a169; }                               /* 넓은면 */
+    .cuboid-theme-chart .bar-idx-4 { background: #2f855a; }                               /* 넓은면 */
+    .cuboid-theme-chart .bar-idx-5 { background: #22543d; }                               /* 넓은면 */
+    .cuboid-theme-chart .bar-idx-6 { background: #b794f4; border-top: 2px solid #9f7aea; } /* 좁은면 */
 
     @media (max-width: 920px) {
       .split { grid-template-columns: 1fr; }
@@ -514,7 +519,7 @@
         </div>
         
         <div class="question-box">
-          <strong>최종 질문</strong> 정육면체 주사위와 직육면체 주사위의 결과에서 발견한 가장 큰 차이점은 무엇인가요? 그 이유를 설명해 봅시다.
+          <strong>최종 질문 </strong> 정육면체 주사위와 직육면체 주사위의 결과에서 발견한 차이점은 무엇인가요? 그 이유를 이야기해 봅시다.
           <textarea id="finalQ1" placeholder=""></textarea>
         </div>
       </div>
@@ -530,12 +535,11 @@
     const pills = document.querySelectorAll('.step-pill');
     const bodyContainer = document.getElementById('bodyContainer');
 
-    // 통계 연동용 데이터 구조 설계
     let stepStats = {
       cube: [
-        { total: 0, counts: [0,0,0,0,0,0] }, // 1차 데이터 스냅샷
-        { total: 0, counts: [0,0,0,0,0,0] }, // 2차 데이터 스냅샷
-        { total: 0, counts: [0,0,0,0,0,0] }  // 3차 데이터 스냅샷
+        { total: 0, counts: [0,0,0,0,0,0] }, 
+        { total: 0, counts: [0,0,0,0,0,0] }, 
+        { total: 0, counts: [0,0,0,0,0,0] }  
       ],
       cuboid: [
         { total: 0, counts: [0,0,0,0,0,0] },
@@ -651,7 +655,6 @@
       spinner.classList.remove('hidden');
       await wait(800);
 
-      // 주사위 난수 루프 연산
       for (let i = 0; i < n; i++) {
         const result = type === 'cube' ? cubeResult() : cuboidResult();
         if (type === 'cube') { cubeCounts[result - 1]++; cubeTotal++; }
@@ -661,16 +664,13 @@
       spinner.classList.add('hidden');
       $(inputId).value = '';
       
-      // 차수별 시각화 그래프 렌더링용 깊은 복사 스냅샷 저장
       if (type === 'cube') {
         $('cubeTotalBox').textContent = `총 던진 횟수: ${cubeTotal}회`;
-        
         stepStats.cube[currentCubeStep - 1].total = cubeTotal;
         stepStats.cube[currentCubeStep - 1].counts = [...cubeCounts];
         currentCubeStep++;
       } else {
         $('cuboidTotalBox').textContent = `총 던진 횟수: ${cuboidTotal}회`;
-        
         stepStats.cuboid[currentCuboidStep - 1].total = cuboidTotal;
         stepStats.cuboid[currentCuboidStep - 1].counts = [...cuboidCounts];
         currentCuboidStep++;
@@ -708,7 +708,6 @@
       });
     }
 
-    // 완전히 비워진 테이블 컴포넌트 이식 (자동완성 제거 스크립트화)
     function initWorksheet(bodyId) {
       const body = $(bodyId);
       body.innerHTML = '';
@@ -730,7 +729,7 @@
       }
     }
 
-    // 군집 묶음형 다중 그래프 드로잉 코어 엔진
+    // 눈금 가중치 렌더링 엔진 전면 수정 (450 -> 3200 스케일 업)
     function buildClusterChart(frameId, dataSnapshot) {
       const frame = $(frameId);
       frame.innerHTML = '';
@@ -742,8 +741,9 @@
         const count = counts[i];
         const relativeFreq = total > 0 ? (count / total) : 0;
         
-        // 정육면체, 직육면체 밸런스를 고려한 반응형 높이 계산 비율 세팅 (최대 한도 보정값 지정)
-        const displayHeight = Math.min(relativeFreq * 450, 100); 
+        // 가중치를 3200으로 설정하여 미세한 상대도수의 차이가 화면에 가득 찬 막대로 노출되도록 보정
+        // 단, 프레임을 넘어가지 않도록 최대 가시 한도 92% 캡 걸어두기
+        const displayHeight = total > 0 ? Math.min(relativeFreq * 3200, 92) : 0; 
 
         const unit = document.createElement('div');
         unit.className = 'individual-bar-unit';
@@ -760,12 +760,10 @@
     function renderFinal() {
       updateStudentBlocks();
       
-      // 정육면체 차수별 1~6 전체 스냅샷 그리기 순차 동기화
       buildClusterChart('cubeCluster1', stepStats.cube[0]);
       buildClusterChart('cubeCluster2', stepStats.cube[1]);
       buildClusterChart('cubeCluster3', stepStats.cube[2]);
 
-      // 직육면체 차수별 1~6 전체 스냅샷 그리기 순차 동기화
       buildClusterChart('cuboidCluster1', stepStats.cuboid[0]);
       buildClusterChart('cuboidCluster2', stepStats.cuboid[1]);
       buildClusterChart('cuboidCluster3', stepStats.cuboid[2]);
