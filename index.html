@@ -509,7 +509,7 @@
       counts.forEach((count, idx) => {
         const div = document.createElement('div');
         div.className = 'count-card';
-        let textMarker = (idx + 1) + "번 눈";
+        let textMarker = (idx + 1) + " ";
         div.innerHTML = `<div class="face">${textMarker}</div><div class="count">${count}회</div>`;
         box.appendChild(div);
       });
