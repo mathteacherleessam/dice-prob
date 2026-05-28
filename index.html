@@ -62,7 +62,7 @@
       border: 1px solid rgba(0,0,0,0.03);
     }
 
-    /* 인풋 스핀 버튼(▲▼) 제거 */
+    /* 인풋 스핀 버튼 제거 */
     input[type="number"]::-webkit-outer-spin-button,
     input[type="number"]::-webkit-inner-spin-button {
       -webkit-appearance: none;
@@ -76,7 +76,7 @@
     .theme-intro h2 { color: #3b5998; font-size: 24px; margin-top: 0; }
     .theme-intro .guide { background: #ebf2fa; border-left: 5px solid #4a6fa5; padding: 15px; border-radius: 12px; margin-bottom: 20px; font-weight: 500; }
     
-    /* 2. 정육면체 테마 (시원하고 직관적인 파란색 계열) */
+    /* 2. 정육면체 테마 (파란색) */
     .theme-cube h2, .theme-cube h3 { color: #2b6cb0; }
     .theme-cube .experiment-box { background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 18px; }
     .theme-cube button { background: #3182ce; color: white; }
@@ -88,7 +88,7 @@
     .theme-cube .worksheet-header { border-bottom: 4px solid #3182ce; }
     .theme-cube th { background: #ebf8ff; color: #2b6cb0; }
 
-    /* 3. 직육면체 테마 (싱그러운 초록/그리너리 계열) */
+    /* 3. 직육면체 테마 (초록색) */
     .theme-cuboid h2, .theme-cuboid h3 { color: #2f855a; }
     .theme-cuboid .experiment-box { background: #f0fff4; border: 2px solid #c6f6d5; border-radius: 18px; }
     .theme-cuboid button { background: #38a169; color: white; }
@@ -100,7 +100,7 @@
     .theme-cuboid .worksheet-header { border-bottom: 4px solid #38a169; }
     .theme-cuboid th { background: #e6fffa; color: #234e52; }
 
-    /* 4. 최종 정리 테마 (고급스러운 퍼플 계열) */
+    /* 4. 최종 정리 테마 (보라색) */
     .theme-final h2, .theme-final h3 { color: #6b46c1; }
     .theme-final .worksheet-header { border-bottom: 4px solid #6b46c1; }
     .theme-final button#restartBtn { background: #e53e3e; }
@@ -108,7 +108,7 @@
     .theme-final button { background: #805ad5; }
     .theme-final button:hover { background: #6b46c1; }
 
-    /* 공통 요소 디자인 디테일 */
+    /* 공통 요소 디자인 */
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin-bottom: 15px; }
     .split { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 20px; align-items: start; }
     label { display: block; font-weight: bold; margin-bottom: 8px; color: #4a5568; }
@@ -135,7 +135,6 @@
       width: 100%; max-height: 160px; object-fit: contain; display: block; margin: 0 auto 16px; padding: 10px; background: white; border-radius: 16px; border: 1px solid #e2e8f0;
     }
     
-    /* 애니메이션 공간 */
     .spinner-wrap {
       background: #fff; border-radius: 16px; padding: 15px; margin: 14px 0; min-height: 150px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center; border: 1px dashed #cbd5e0;
     }
@@ -163,7 +162,6 @@
     th, td { border: 1px solid #e2e8f0; padding: 10px; text-align: center; vertical-align: middle; }
     th { font-weight: bold; }
     
-    /* 결과 기록 테이블용 특수 인풋 스타일 */
     .worksheet table input[type="number"] {
       padding: 8px;
       text-align: center;
@@ -174,13 +172,11 @@
     .fraction { display: inline-flex; flex-direction: column; align-items: center; gap: 4px; }
     .fraction input { width: 60px; text-align: center; padding: 6px; border-radius: 8px; font-size: 14px; border: 1px solid #cbd5e0; }
     .fraction-line { width: 64px; height: 2px; background: #4a5568; }
-    .question-box { margin-top: 16px; padding: 16px; border-radius: 14px; background: #f7fafc; border: 1px solid #e2e8f0; }
-    .question-box strong { display: block; margin-bottom: 6px; color: #2d3748; }
     
     .final-summary-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
 
     /* ----------------------------------------------------
-       다중 차수 1~6 눈 전체 묶음 레이아웃 그래프 (스케일 업그레이드)
+       교정된 꺾은선 점 그래프(Line-Dot) 시스템 레이아웃
     ------------------------------------------------------- */
     .grand-chart-box {
       background: white;
@@ -217,36 +213,55 @@
       border-radius: 8px;
     }
     
-    /* 눈금 프레임 높이를 확보하고 정렬 최적화 */
+    /* 0부터 0.4 고정 스케일 프레임 */
     .bars-axis-frame {
       display: flex;
       justify-content: space-around;
       align-items: flex-end;
-      height: 240px; /* 기존보다 세로 폭을 대폭 늘려 눈금 격차 시각화 */
+      height: 240px; 
       border-bottom: 2px solid #cbd5e0;
       padding-bottom: 4px;
-      background-image: linear-gradient(#e2e8f0 1px, transparent 1px);
-      background-size: 100% 40px; /* 보이지 않는 내부 실선 그리드 보정 */
+      position: relative;
+      background-image: linear-gradient(#edf2f7 1px, transparent 1px);
+      background-size: 100% 60px; /* 0.4 범위를 4칸 분할 가이드라인 */
     }
+
+    /* 축 눈금 가이드 텍스트 */
+    .y-axis-guide {
+      position: absolute;
+      left: 2px;
+      font-size: 10px;
+      color: #a0aec0;
+      font-weight: bold;
+    }
+
     .individual-bar-unit {
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 13%;
+      width: 14%;
       height: 100%;
       justify-content: flex-end;
       position: relative;
     }
-    .unit-bar-pillar {
-      width: 100%;
-      border-top-left-radius: 4px;
-      border-top-right-radius: 4px;
-      transition: height 0.4s ease;
-      position: relative;
+
+    /* 점 그래프 컴포넌트 구조 */
+    .dot-plot-point {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, 50%); /* 중심점 정렬 보정 */
+      transition: bottom 0.4s ease;
+      z-index: 3;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
+
+    /* 점 위에 달라붙는 수치 */
     .unit-bar-value {
       position: absolute;
-      top: -24px; /* 막대 꼭대기 위로 고정 */
+      top: -24px; 
       width: 44px;
       left: 50%;
       transform: translateX(-50%);
@@ -260,25 +275,29 @@
       font-size: 12px;
       font-weight: bold;
       color: #4a5568;
+      position: absolute;
+      bottom: -24px;
     }
 
-    /* 정육면체 전용 차수별 파스텔 블루 그라데이션 컬러링 */
-    .cube-theme-chart .grand-chart-title { color: #2b6cb0; }
-    .cube-theme-chart .bar-idx-1 { background: #90cdf4; }
-    .cube-theme-chart .bar-idx-2 { background: #63b3ed; }
-    .cube-theme-chart .bar-idx-3 { background: #4299e1; }
-    .cube-theme-chart .bar-idx-4 { background: #3182ce; }
-    .cube-theme-chart .bar-idx-5 { background: #2b6cb0; }
-    .cube-theme-chart .bar-idx-6 { background: #2c5282; }
+    /* SVG 연동선 프레임 */
+    .svg-line-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+    }
 
-    /* 직육면체 전용 초록/보라 개성 테마 컬러링 (좁은 면과 넓은 면의 격차가 확 튀도록 보정) */
+    /* 테마별 도트 색상 지정 */
+    .cube-theme-chart .grand-chart-title { color: #2b6cb0; }
+    .cube-theme-chart .dot-plot-point { background-color: #3182ce; }
+    
     .cuboid-theme-chart .grand-chart-title { color: #2f855a; }
-    .cuboid-theme-chart .bar-idx-1 { background: #9f7aea; border-top: 2px solid #805ad5; } /* 좁은면 */
-    .cuboid-theme-chart .bar-idx-2 { background: #48bb78; }                               /* 넓은면 */
-    .cuboid-theme-chart .bar-idx-3 { background: #38a169; }                               /* 넓은면 */
-    .cuboid-theme-chart .bar-idx-4 { background: #2f855a; }                               /* 넓은면 */
-    .cuboid-theme-chart .bar-idx-5 { background: #22543d; }                               /* 넓은면 */
-    .cuboid-theme-chart .bar-idx-6 { background: #b794f4; border-top: 2px solid #9f7aea; } /* 좁은면 */
+    /* 직육면체: 1,6번 눈 보라색 / 2,3,4,5번 눈 초록색 전용 도트 매칭 */
+    .cuboid-theme-chart .dot-idx-1, .cuboid-theme-chart .dot-idx-6 { background-color: #805ad5; width:14px; height:14px; }
+    .cuboid-theme-chart .dot-idx-2, .cuboid-theme-chart .dot-idx-3, .cuboid-theme-chart .dot-idx-4, .cuboid-theme-chart .dot-idx-5 { background-color: #38a169; }
 
     @media (max-width: 920px) {
       .split { grid-template-columns: 1fr; }
@@ -469,46 +488,38 @@
         <div class="final-summary-grid">
           
           <div class="grand-chart-box cube-theme-chart">
-            <div class="grand-chart-title">📊 정육면체 주사위: 차수별 전체 눈(1~6) 상대도수 변화 그래프</div>
+            <div class="grand-chart-title">📊 정육면체 주사위: 차수별 전체 눈(1~6) 상대도수 점 그래프 (축 고정: 0 ~ 0.4)</div>
             <div class="experiment-cluster-wrap">
-              
               <div class="cluster-container">
                 <div class="cluster-title">1차 실험 결과</div>
                 <div class="bars-axis-frame" id="cubeCluster1"></div>
               </div>
-              
               <div class="cluster-container">
                 <div class="cluster-title">2차 실험 결과</div>
                 <div class="bars-axis-frame" id="cubeCluster2"></div>
               </div>
-              
               <div class="cluster-container">
                 <div class="cluster-title">3차 실험 결과</div>
                 <div class="bars-axis-frame" id="cubeCluster3"></div>
               </div>
-              
             </div>
           </div>
 
           <div class="grand-chart-box cuboid-theme-chart">
-            <div class="grand-chart-title">📊 직육면체 주사위: 차수별 전체 눈(1~6) 상대도수 변화 그래프</div>
+            <div class="grand-chart-title">📊 직육면체 주사위: 차수별 전체 눈(1~6) 상대도수 점 그래프 (축 고정: 0 ~ 0.4)</div>
             <div class="experiment-cluster-wrap">
-              
               <div class="cluster-container">
                 <div class="cluster-title">1차 실험 결과</div>
                 <div class="bars-axis-frame" id="cuboidCluster1"></div>
               </div>
-              
               <div class="cluster-container">
                 <div class="cluster-title">2차 실험 결과</div>
                 <div class="bars-axis-frame" id="cuboidCluster2"></div>
               </div>
-              
               <div class="cluster-container">
                 <div class="cluster-title">3차 실험 결과</div>
                 <div class="bars-axis-frame" id="cuboidCluster3"></div>
               </div>
-              
             </div>
           </div>
 
@@ -729,32 +740,72 @@
       }
     }
 
-    // 눈금 가중치 렌더링 엔진 전면 수정 (450 -> 3200 스케일 업)
+    /* ----------------------------------------------------
+       ★ 정밀 교정 점-선 그래프 렌더링 스크립트 엔진 ★
+       축 고정: 바닥 0 -> 꼭대기 0.4 연산 분배 시스템
+    ------------------------------------------------------- */
     function buildClusterChart(frameId, dataSnapshot) {
       const frame = $(frameId);
       frame.innerHTML = '';
       
+      // 고정 눈금 텍스트 레이블 인입
+      const g0 = document.createElement('div'); g0.className='y-axis-guide'; g0.style.bottom='2px'; g0.textContent='0'; frame.appendChild(g0);
+      const g1 = document.createElement('div'); g1.className='y-axis-guide'; g1.style.bottom='60px'; g1.textContent='0.1'; frame.appendChild(g1);
+      const g2 = document.createElement('div'); g2.className='y-axis-guide'; g2.style.bottom='120px'; g2.textContent='0.2'; frame.appendChild(g2);
+      const g3 = document.createElement('div'); g3.className='y-axis-guide'; g3.style.bottom='180px'; g3.textContent='0.3'; frame.appendChild(g3);
+      const g4 = document.createElement('div'); g4.className='y-axis-guide'; g4.style.bottom='230px'; g4.textContent='0.4'; frame.appendChild(g4);
+
       const total = dataSnapshot.total;
       const counts = dataSnapshot.counts;
+      
+      // 점들의 X, Y 좌표를 추적하여 선으로 연결할 배열
+      let pointsCoordinate = [];
 
       for (let i = 0; i < 6; i++) {
         const count = counts[i];
         const relativeFreq = total > 0 ? (count / total) : 0;
         
-        // 가중치를 3200으로 설정하여 미세한 상대도수의 차이가 화면에 가득 찬 막대로 노출되도록 보정
-        // 단, 프레임을 넘어가지 않도록 최대 가시 한도 92% 캡 걸어두기
-        const displayHeight = total > 0 ? Math.min(relativeFreq * 3200, 92) : 0; 
+        // 0.4 고정 스케일 공식 대입: (상대도수 / 0.4) * 100%
+        const displayHeight = total > 0 ? Math.min((relativeFreq / 0.4) * 100, 100) : 0; 
 
         const unit = document.createElement('div');
         unit.className = 'individual-bar-unit';
         unit.innerHTML = `
-          <div class="unit-bar-pillar bar-idx-${i+1}" style="height: ${displayHeight}%;">
-            <div class="unit-bar-value">${total > 0 ? relativeFreq.toFixed(3) : '0.00'}</div>
+          <div class="dot-plot-point dot-idx-${i+1}" style="bottom: ${displayHeight}%;">
+            <div class="unit-bar-value">${total > 0 ? relativeFreq.toFixed(3) : '0.000'}</div>
           </div>
           <div class="unit-bar-label">${i+1}</div>
         `;
         frame.appendChild(unit);
       }
+
+      // 렌더링 직후 점과 점을 일직선으로 연동하는 SVG 동적 생성 파트
+      setTimeout(() => {
+        const dots = frame.querySelectorAll('.dot-plot-point');
+        if (dots.length === 0 || total === 0) return;
+
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute('class', 'svg-line-layer');
+        frame.appendChild(svg);
+
+        let pathD = "";
+        dots.forEach((dot, index) => {
+          // 부모 프레임 기준 상대 위치 계산
+          const x = dot.offsetLeft + (dot.offsetWidth / 2);
+          const y = dot.offsetTop + (dot.offsetHeight / 2);
+          
+          if (index === 0) pathD += `M ${x} ${y}`;
+          else pathD += ` L ${x} ${y}`;
+        });
+
+        const polyline = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        polyline.setAttribute("d", pathD);
+        polyline.setAttribute("fill", "none");
+        polyline.setAttribute("stroke", frame.parentElement.parentElement.classList.contains('cube-theme-chart') ? "#3182ce" : "#38a169");
+        polyline.setAttribute("stroke-width", "3");
+        polyline.setAttribute("stroke-dasharray", "1");
+        svg.appendChild(polyline);
+      }, 50);
     }
 
     function renderFinal() {
