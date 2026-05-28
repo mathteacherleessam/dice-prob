@@ -135,7 +135,7 @@
       width: 100%; max-height: 160px; object-fit: contain; display: block; margin: 0 auto 16px; padding: 10px; background: white; border-radius: 16px; border: 1px solid #e2e8f0;
     }
     
-    /* 애니메이션 공간 및 업로드 이미지 연동 회전 이펙트 */
+    /* 애니메이션 공간 */
     .spinner-wrap {
       background: #fff; border-radius: 16px; padding: 15px; margin: 14px 0; min-height: 150px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center; border: 1px dashed #cbd5e0;
     }
@@ -162,83 +162,128 @@
     table { width: 100%; border-collapse: collapse; margin-top: 12px; background: white; border-radius: 8px; overflow: hidden; }
     th, td { border: 1px solid #e2e8f0; padding: 10px; text-align: center; vertical-align: middle; }
     th { font-weight: bold; }
+    
+    /* 결과 기록 테이블용 특수 인풋 스타일 */
+    .worksheet table input[type="number"] {
+      padding: 8px;
+      text-align: center;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
     .fraction { display: inline-flex; flex-direction: column; align-items: center; gap: 4px; }
     .fraction input { width: 60px; text-align: center; padding: 6px; border-radius: 8px; font-size: 14px; border: 1px solid #cbd5e0; }
     .fraction-line { width: 64px; height: 2px; background: #4a5568; }
     .question-box { margin-top: 16px; padding: 16px; border-radius: 14px; background: #f7fafc; border: 1px solid #e2e8f0; }
     .question-box strong { display: block; margin-bottom: 6px; color: #2d3748; }
     
-    .final-summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .final-summary-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
 
-    /* 통계 수렴 시각화 CSS 막대그래프 컴포넌트 */
-    .chart-container {
-      margin: 20px 0;
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 20px;
-    }
-    .chart-title {
-      font-size: 16px;
-      font-weight: bold;
+    /* ----------------------------------------------------
+       새롭게 구현한 다중 차수 1~6 눈 전체 묶음 레이아웃 그래프 
+    ------------------------------------------------------- */
+    .grand-chart-box {
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 24px;
       margin-bottom: 15px;
-      text-align: center;
-      color: #4a5568;
     }
-    .chart-frame {
+    .grand-chart-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+    .experiment-cluster-wrap {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .cluster-container {
+      background: #f8fafc;
+      border: 1px solid #edf2f7;
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .cluster-title {
+      font-size: 14px;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 15px;
+      color: #4a5568;
+      background: #edf2f7;
+      padding: 6px;
+      border-radius: 8px;
+    }
+    .bars-axis-frame {
       display: flex;
       justify-content: space-around;
       align-items: flex-end;
-      height: 200px;
+      height: 180px;
       border-bottom: 2px solid #cbd5e0;
-      padding-bottom: 10px;
-      position: relative;
+      padding-bottom: 4px;
     }
-    .chart-bar-wrapper {
+    .individual-bar-unit {
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 20%;
-    }
-    .chart-bar {
-      width: 100%;
-      background: #cbd5e0;
-      border-top-left-radius: 6px;
-      border-top-right-radius: 6px;
+      width: 13%;
       position: relative;
-      transition: height 0.5s ease;
-      min-height: 4px;
     }
-    .bar-value {
-      position: absolute;
-      top: -25px;
+    .unit-bar-pillar {
       width: 100%;
-      text-align: center;
-      font-size: 12px;
-      font-weight: bold;
-      color: #2d3748;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      transition: height 0.4s ease;
+      position: relative;
+      min-height: 2px;
     }
-    .bar-label {
-      margin-top: 8px;
-      font-size: 13px;
+    .unit-bar-value {
+      position: absolute;
+      top: -22px;
+      width: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-size: 10px;
+      font-weight: bold;
+      color: #333;
+    }
+    .unit-bar-label {
+      margin-top: 6px;
+      font-size: 11px;
       font-weight: bold;
       color: #718096;
-      text-align: center;
     }
-    /* 그래프 바 개별 색상 포인트 */
-    .bar-step1 { background-color: #f6ad55; }
-    .bar-step2 { background-color: #4fd1c5; }
-    .bar-step3 { background-color: #63b3ed; }
-    .bar-theory { background-color: #b7791f; border: 2px dashed #744210; }
+
+    /* 정육면체 전용 차수별 파스텔 블루 그라데이션 컬러링 */
+    .cube-theme-chart .grand-chart-title { color: #2b6cb0; }
+    .cube-theme-chart .bar-idx-1 { background: #90cdf4; }
+    .cube-theme-chart .bar-idx-2 { background: #63b3ed; }
+    .cube-theme-chart .bar-idx-3 { background: #4299e1; }
+    .cube-theme-chart .bar-idx-4 { background: #3182ce; }
+    .cube-theme-chart .bar-idx-5 { background: #2b6cb0; }
+    .cube-theme-chart .bar-idx-6 { background: #2c5282; }
+
+    /* 직육면체 전용 초록/보라 개성 테마 컬러링 (좁은 면과 넓은 면의 매칭 구분 강화) */
+    .cuboid-theme-chart .grand-chart-title { color: #2f855a; }
+    .cuboid-theme-chart .bar-idx-1 { background: #9f7aea; border: 1px solid #805ad5; } /* 1번 좁은면: 보라 */
+    .cuboid-theme-chart .bar-idx-2 { background: #48bb78; }                           /* 2번 넓은면: 초록 */
+    .cuboid-theme-chart .bar-idx-3 { background: #38a169; }                           /* 3번 넓은면: 초록 */
+    .cuboid-theme-chart .bar-idx-4 { background: #2f855a; }                           /* 4번 넓은면: 초록 */
+    .cuboid-theme-chart .bar-idx-5 { background: #22543d; }                           /* 5번 넓은면: 초록 */
+    .cuboid-theme-chart .bar-idx-6 { background: #b794f4; border: 1px solid #9f7aea; } /* 6번 좁은면: 연보라 */
 
     @media (max-width: 920px) {
-      .split, .final-summary-grid { grid-template-columns: 1fr; }
+      .split { grid-template-columns: 1fr; }
       .worksheet-header { flex-direction: column; align-items: stretch; }
+      .experiment-cluster-wrap { grid-template-columns: 1fr; gap: 15px; }
     }
     @media (max-width: 650px) {
       th, td { font-size: 13px; padding: 8px 4px; }
-      .fraction input { width: 48px; }
-      .fraction-line { width: 52px; }
+      .fraction input { width: 45px; }
+      .fraction-line { width: 48px; }
       .count-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
@@ -264,8 +309,8 @@
         이 활동은 주사위를 한 번에 많이 던지는 것이 아니라, 1차·2차·3차로 나누어 던진 횟수를 누적합니다. 각 단계에서 관심 있는 숫자 하나를 선택하고, 그 숫자가 나온 횟수와 상대도수를 직접 계산해서 활동지에 적어 봅니다.
       </div>
       <div class="grid">
-        <div><label for="gradeClass">학년/반</label><input id="gradeClass" placeholder="예: 2학년 3반"></div>
-        <div><label for="groupName">모둠명 또는 학생명</label><input id="groupName" placeholder="예: 3모둠 또는 김확률"></div>
+        <div><label for="gradeClass">학년/반</label><input id="gradeClass" placeholder=""></div>
+        <div><label for="groupName">모둠명 또는 학생명</label><input id="groupName" placeholder=""></div>
       </div>
       <div class="note">
         권장 흐름: 1차는 1~10회, 2차는 50~100회, 3차는 200~500회 정도로 누적 실험해 보세요. 예를 들어 10회 → 100회 → 500회가 되도록 추가 던지기 횟수를 입력할 수 있습니다.
@@ -288,7 +333,7 @@
           
           <div style="margin-top: 15px;">
             <label for="cubeAddCount">입력한 횟수만큼 추가로 던지기</label>
-            <input id="cubeAddCount" type="number" placeholder="예: 10, 90, 400">
+            <input id="cubeAddCount" type="number" placeholder="">
           </div>
           <div class="btn-row"><button id="runCubeAddBtn">🎲 주사위 던지기</button></div>
           
@@ -312,9 +357,9 @@
             <strong>예상하기</strong> 정육면체 주사위에서 관심 있는 주사위 눈 하나를 선택하고, 상대도수가 어떤 값에 가까워질지 예상해 봅시다.
             <div style="margin-top:10px; margin-bottom:10px;">
               <label for="cubeChosenNumber">선택한 주사위 눈 (1~6)</label>
-              <input id="cubeChosenNumber" type="number" placeholder="예: 3">
+              <input id="cubeChosenNumber" type="number" placeholder="">
             </div>
-            <textarea id="cubePrediction" placeholder="예상하는 이유와 확률을 적어주세요."></textarea>
+            <textarea id="cubePrediction" placeholder=""></textarea>
           </div>
           
           <h3>실험 결과 기록</h3>
@@ -332,7 +377,7 @@
           </table>
           <div class="question-box">
             <strong>정리하기</strong> 상대도수는 예상한 값과 일치했나요? 일치하지 않았거나 차이가 있다면 그 이유를 설명해 봅시다.
-            <textarea id="cubeReflection"></textarea>
+            <textarea id="cubeReflection" placeholder=""></textarea>
           </div>
         </div>
       </div>
@@ -355,7 +400,7 @@
           
           <div style="margin-top: 15px;">
             <label for="cuboidAddCount">입력한 횟수만큼 추가로 던지기</label>
-            <input id="cuboidAddCount" type="number" placeholder="예: 10, 90, 400">
+            <input id="cuboidAddCount" type="number" placeholder="">
           </div>
           <div class="btn-row"><button id="runCuboidAddBtn">🎲 주사위 던지기</button></div>
           
@@ -381,7 +426,7 @@
               <label for="cuboidChosenNumber">선택한 주사위 눈 (정육면체와 자동 연동)</label>
               <input id="cuboidChosenNumber" type="number" readonly style="background: #edf2f7; color: #718096;">
             </div>
-            <textarea id="cuboidPrediction" placeholder="면의 넓이 차이를 고려하여 예상 상태를 적어보세요."></textarea>
+            <textarea id="cuboidPrediction" placeholder=""></textarea>
           </div>
           
           <h3>실험 결과 기록</h3>
@@ -399,7 +444,7 @@
           </table>
           <div class="question-box">
             <strong>정리하기</strong> 직육면체 실험의 상대도수 결과는 정육면체 때와 어떻게 다른가요? 모양의 차이와 관련지어 대답해 봅시다.
-            <textarea id="cuboidReflection"></textarea>
+            <textarea id="cuboidReflection" placeholder=""></textarea>
           </div>
         </div>
       </div>
@@ -415,52 +460,53 @@
           <h2>4. 최종 결과 비교 정리</h2>
           <div id="finalStudent" class="student-info"></div>
         </div>
-        <div class="guide">1차 ➔ 2차 ➔ 3차 실험으로 갈수록 내가 선택한 눈의 상대도수가 이론상 확률과 가까워지는지 확인해보세요!</div>
         
         <div class="final-summary-grid">
-          <div class="chart-container">
-            <div class="chart-title">📊 정육면체: 선택한 눈 <span class="txt-chosen-display" style="color:#2b6cb0; font-weight:900;">3</span>번의 상대도수 수렴 과정</div>
-            <div class="chart-frame">
-              <div class="chart-bar-wrapper">
-                <div id="cubeBar1" class="chart-bar bar-step1" style="height: 0%;"><div class="bar-value" id="cubeVal1">0.00</div></div>
-                <div class="bar-label">1차 실험</div>
+          
+          <div class="grand-chart-box cube-theme-chart">
+            <div class="grand-chart-title">📊 정육면체 주사위: 차수별 전체 눈(1~6) 상대도수 변화 그래프</div>
+            <div class="experiment-cluster-wrap">
+              
+              <div class="cluster-container">
+                <div class="cluster-title">1차 실험 결과</div>
+                <div class="bars-axis-frame" id="cubeCluster1"></div>
               </div>
-              <div class="chart-bar-wrapper">
-                <div id="cubeBar2" class="chart-bar bar-step2" style="height: 0%;"><div class="bar-value" id="cubeVal2">0.00</div></div>
-                <div class="bar-label">2차 실험</div>
+              
+              <div class="cluster-container">
+                <div class="cluster-title">2차 실험 결과</div>
+                <div class="bars-axis-frame" id="cubeCluster2"></div>
               </div>
-              <div class="chart-bar-wrapper">
-                <div id="cubeBar3" class="chart-bar bar-step3" style="height: 0%;"><div class="bar-value" id="cubeVal3">0.00</div></div>
-                <div class="bar-label">3차 실험</div>
+              
+              <div class="cluster-container">
+                <div class="cluster-title">3차 실험 결과</div>
+                <div class="bars-axis-frame" id="cubeCluster3"></div>
               </div>
-              <div class="chart-bar-wrapper">
-                <div id="cubeBarTheory" class="chart-bar bar-theory" style="height: 55%;"><div class="bar-value">0.167</div></div>
-                <div class="bar-label">이론 확률</div>
-              </div>
+              
             </div>
           </div>
 
-          <div class="chart-container">
-            <div class="chart-title">📊 직육면체: 선택한 눈 <span class="txt-chosen-display" style="color:#2f855a; font-weight:900;">3</span>번의 상대도수 수렴 과정</div>
-            <div class="chart-frame">
-              <div class="chart-bar-wrapper">
-                <div id="cuboidBar1" class="chart-bar bar-step1" style="height: 0%;"><div class="bar-value" id="cuboidVal1">0.00</div></div>
-                <div class="bar-label">1차 실험</div>
+          <div class="grand-chart-box cuboid-theme-chart">
+            <div class="grand-chart-title">📊 직육면체 주사위: 차수별 전체 눈(1~6) 상대도수 변화 그래프</div>
+            <div class="experiment-cluster-wrap">
+              
+              <div class="cluster-container">
+                <div class="cluster-title">1차 실험 결과</div>
+                <div class="bars-axis-frame" id="cuboidCluster1"></div>
               </div>
-              <div class="chart-bar-wrapper">
-                <div id="cuboidBar2" class="chart-bar bar-step2" style="height: 0%;"><div class="bar-value" id="cuboidVal2">0.00</div></div>
-                <div class="bar-label">2차 실험</div>
+              
+              <div class="cluster-container">
+                <div class="cluster-title">2차 실험 결과</div>
+                <div class="bars-axis-frame" id="cuboidCluster2"></div>
               </div>
-              <div class="chart-bar-wrapper">
-                <div id="cuboidBar3" class="chart-bar bar-step3" style="height: 0%;"><div class="bar-value" id="cuboidVal3">0.00</div></div>
-                <div class="bar-label">3차 실험</div>
+              
+              <div class="cluster-container">
+                <div class="cluster-title">3차 실험 결과</div>
+                <div class="bars-axis-frame" id="cuboidCluster3"></div>
               </div>
-              <div class="chart-bar-wrapper">
-                <div id="cuboidBarTheory" class="chart-bar bar-theory" style="height: 0%;"><div class="bar-value" id="cuboidValTheory">0.00</div></div>
-                <div class="bar-label">이론 확률</div>
-              </div>
+              
             </div>
           </div>
+
         </div>
         
         <div class="note" id="finalCompareText" style="white-space: pre-line; font-size:15px; line-height:1.7;">
@@ -468,12 +514,8 @@
         </div>
         
         <div class="question-box">
-          <strong>최종 질문 1.</strong> 정육면체 주사위와 직육면체 주사위의 결과에서 발견한 가장 큰 차이점은 무엇인가요?
-          <textarea id="finalQ1" placeholder="주사위 눈별로 나온 횟수의 균형이나 막대그래프의 최종 종착지를 비교하여 적어보세요."></textarea>
-        </div>
-        <div class="question-box">
-          <strong>최종 질문 2.</strong> 주사위의 입체 모양이나 면의 넓이가 각 눈이 나올 확률에 영향을 준다고 볼 수 있을까요? 실험 근거와 시각화된 그래프를 토대로 설명해 봅시다.
-          <textarea id="finalQ2" placeholder="통계적 확률과 도형의 특징을 연결하여 생각해보세요."></textarea>
+          <strong>최종 질문</strong> 정육면체 주사위와 직육면체 주사위의 결과에서 발견한 가장 큰 차이점은 무엇인가요? 그 이유를 설명해 봅시다.
+          <textarea id="finalQ1" placeholder=""></textarea>
         </div>
       </div>
       <div class="btn-row">
@@ -488,10 +530,18 @@
     const pills = document.querySelectorAll('.step-pill');
     const bodyContainer = document.getElementById('bodyContainer');
 
-    // 각 차수별 데이터 추적 객체 (그래프 반영용)
-    let historyData = {
-      cube: { totals: [0, 0, 0], chosens: [0, 0, 0] },
-      cuboid: { totals: [0, 0, 0], chosens: [0, 0, 0] }
+    // 통계 연동용 데이터 구조 설계
+    let stepStats = {
+      cube: [
+        { total: 0, counts: [0,0,0,0,0,0] }, // 1차 데이터 스냅샷
+        { total: 0, counts: [0,0,0,0,0,0] }, // 2차 데이터 스냅샷
+        { total: 0, counts: [0,0,0,0,0,0] }  // 3차 데이터 스냅샷
+      ],
+      cuboid: [
+        { total: 0, counts: [0,0,0,0,0,0] },
+        { total: 0, counts: [0,0,0,0,0,0] },
+        { total: 0, counts: [0,0,0,0,0,0] }
+      ]
     };
 
     let cubeCounts = [0,0,0,0,0,0], cuboidCounts = [0,0,0,0,0,0];
@@ -514,7 +564,6 @@
       return true;
     }
 
-    // 모든 실험 수행 완료 체크 제어 로직 (개요 제외)
     function isExperimentFinished() {
       return (currentCubeStep > 3 && currentCuboidStep > 3);
     }
@@ -522,7 +571,6 @@
     function goPage(index) {
       if (index > 0 && !validateStudent()) return;
       
-      // 최종 정리 접근 제어 잠금 시스템 적용
       if (index === 3 && !isExperimentFinished()) {
         alert('정육면체와 직육면체 주사위 실험을 각각 3차까지 모두 완료해야 최종 정리에 입장할 수 있습니다!');
         return;
@@ -576,8 +624,8 @@
     function init() {
       renderCountGrid('cubeCountGrid', cubeCounts);
       renderCountGrid('cuboidCountGrid', cuboidCounts);
-      initWorksheet('cubeWorksheetBody', 'cube');
-      initWorksheet('cuboidWorksheetBody', 'cuboid');
+      initWorksheet('cubeWorksheetBody');
+      initWorksheet('cuboidWorksheetBody');
     }
 
     async function runAdd(type) {
@@ -591,19 +639,19 @@
 
       const step = type === 'cube' ? currentCubeStep : currentCuboidStep;
       if (step > 3) {
-        alert('이미 3차 실험까지 모두 끝났습니다! 상단 탭을 이동해 다음 실험이나 최종 정리를 진행하세요.');
+        alert('이미 3차 실험까지 모두 끝났습니다! 최종 정리 화면으로 이동하세요.');
         return;
       }
 
       const inputId = type === 'cube' ? 'cubeAddCount' : 'cuboidAddCount';
       const n = Number($(inputId).value);
       if (!Number.isInteger(n) || n <= 0) { alert('던질 횟수를 1 이상의 정수로 정확히 입력해 주세요.'); return; }
-      if (n > 10000) { alert('한 번에 던질 수 있는 최대 횟수는 10,000회입니다.'); return; }
 
       const spinner = type === 'cube' ? $('cubeSpinner') : $('cuboidSpinner');
       spinner.classList.remove('hidden');
       await wait(800);
 
+      // 주사위 난수 루프 연산
       for (let i = 0; i < n; i++) {
         const result = type === 'cube' ? cubeResult() : cuboidResult();
         if (type === 'cube') { cubeCounts[result - 1]++; cubeTotal++; }
@@ -613,34 +661,27 @@
       spinner.classList.add('hidden');
       $(inputId).value = '';
       
+      // 차수별 시각화 그래프 렌더링용 깊은 복사 스냅샷 저장
       if (type === 'cube') {
         $('cubeTotalBox').textContent = `총 던진 횟수: ${cubeTotal}회`;
-        // 활동지 내부 해당 차수 인풋 채우기
-        const rows = $('cubeWorksheetBody').children;
-        rows[currentCubeStep-1].children[1].textContent = cubeTotal + "회";
-        rows[currentCubeStep-1].children[2].textContent = cubeCounts[chosenNum - 1] + "회";
         
-        // 기록 추적 데이터 저장
-        historyData.cube.totals[currentCubeStep-1] = cubeTotal;
-        historyData.cube.chosens[currentCubeStep-1] = cubeCounts[chosenNum - 1];
+        stepStats.cube[currentCubeStep - 1].total = cubeTotal;
+        stepStats.cube[currentCubeStep - 1].counts = [...cubeCounts];
         currentCubeStep++;
       } else {
         $('cuboidTotalBox').textContent = `총 던진 횟수: ${cuboidTotal}회`;
-        const rows = $('cuboidWorksheetBody').children;
-        rows[currentCuboidStep-1].children[1].textContent = cuboidTotal + "회";
-        rows[currentCuboidStep-1].children[2].textContent = cuboidCounts[chosenNum - 1] + "회";
         
-        historyData.cuboid.totals[currentCuboidStep-1] = cuboidTotal;
-        historyData.cuboid.chosens[currentCuboidStep-1] = cuboidCounts[chosenNum - 1];
+        stepStats.cuboid[currentCuboidStep - 1].total = cuboidTotal;
+        stepStats.cuboid[currentCuboidStep - 1].counts = [...cuboidCounts];
         currentCuboidStep++;
       }
 
       renderCountGrid(type === 'cube' ? 'cubeCountGrid' : 'cuboidCountGrid', type === 'cube' ? cubeCounts : cuboidCounts);
       
       if(type === 'cube' && currentCubeStep > 3) {
-        alert('정육면체 실험이 3차까지 완료되었습니다! 우측 아래 버튼을 눌러 직육면체 실험으로 이동하세요.');
+        alert('정육면체 실험이 3차까지 완료되었습니다! 직육면체 실험으로 이동하세요.');
       } else if (type === 'cuboid' && currentCuboidStep > 3) {
-        alert('직육면체 실험까지 모두 끝났습니다! 이제 최종 정리 화면으로 이동하여 통계 그래프를 확인하세요.');
+        alert('직육면체 실험까지 모두 끝났습니다! 이제 최종 정리 화면으로 이동하세요.');
       }
     }
 
@@ -662,26 +703,26 @@
       counts.forEach((count, idx) => {
         const div = document.createElement('div');
         div.className = 'count-card';
-        let textMarker = (idx + 1) + " ";
-        div.innerHTML = `<div class="face">${textMarker}</div><div class="count">${count}회</div>`;
         box.appendChild(div);
+        div.innerHTML = `<div class="face">${idx + 1}번 눈</div><div class="count">${count}회</div>`;
       });
     }
 
-    function initWorksheet(bodyId, prefix) {
+    // 완전히 비워진 테이블 컴포넌트 이식 (자동완성 제거 스크립트화)
+    function initWorksheet(bodyId) {
       const body = $(bodyId);
       body.innerHTML = '';
       for (let row = 1; row <= 3; row++) {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td style="font-weight:bold;">${row}차 (누적)</td>
-          <td style="color:#2b6cb0; font-weight:bold;">-</td>
-          <td style="color:#2d3748; font-weight:bold;">-</td>
+          <td style="font-weight:bold;">${row}차 실험</td>
+          <td><input type="number" style="width:75px;"></td>
+          <td><input type="number" style="width:75px;"></td>
           <td class="freq-cell">
             <div class="fraction">
-              <input type="number" placeholder="분자">
+              <input type="number">
               <div class="fraction-line"></div>
-              <input type="number" placeholder="분모">
+              <input type="number">
             </div>
           </td>
         `;
@@ -689,44 +730,45 @@
       }
     }
 
-    // 최종 정리 리포트 및 막대그래프 갱신 함수
+    // 군집 묶음형 다중 그래프 드로잉 코어 엔진
+    function buildClusterChart(frameId, dataSnapshot) {
+      const frame = $(frameId);
+      frame.innerHTML = '';
+      
+      const total = dataSnapshot.total;
+      const counts = dataSnapshot.counts;
+
+      for (let i = 0; i < 6; i++) {
+        const count = counts[i];
+        const relativeFreq = total > 0 ? (count / total) : 0;
+        
+        // 정육면체, 직육면체 밸런스를 고려한 반응형 높이 계산 비율 세팅 (최대 한도 보정값 지정)
+        const displayHeight = Math.min(relativeFreq * 450, 100); 
+
+        const unit = document.createElement('div');
+        unit.className = 'individual-bar-unit';
+        unit.innerHTML = `
+          <div class="unit-bar-pillar bar-idx-${i+1}" style="height: ${displayHeight}%;">
+            <div class="unit-bar-value">${total > 0 ? relativeFreq.toFixed(3) : '0.00'}</div>
+          </div>
+          <div class="unit-bar-label">${i+1}</div>
+        `;
+        frame.appendChild(unit);
+      }
+    }
+
     function renderFinal() {
       updateStudentBlocks();
       
-      const chosenNum = Number($('cubeChosenNumber').value) || 3;
-      
-      // 헤더 표시 번호 동기화
-      const displays = document.querySelectorAll('.txt-chosen-display');
-      displays.forEach(el => el.textContent = chosenNum);
+      // 정육면체 차수별 1~6 전체 스냅샷 그리기 순차 동기화
+      buildClusterChart('cubeCluster1', stepStats.cube[0]);
+      buildClusterChart('cubeCluster2', stepStats.cube[1]);
+      buildClusterChart('cubeCluster3', stepStats.cube[2]);
 
-      // 1. 정육면체 그래프 렌더링 로직 (최대 높이 비율 1.0 분배)
-      for(let i=1; i<=3; i++) {
-        let t = historyData.cube.totals[i-1];
-        let c = historyData.cube.chosens[i-1];
-        let ratio = t > 0 ? (c / t) : 0;
-        let barEl = $('cubeBar' + i);
-        let valEl = $('cubeVal' + i);
-        
-        valEl.textContent = ratio.toFixed(3);
-        barEl.style.height = Math.min(ratio * 300, 100) + '%'; // 시각화 스케일 조정
-      }
-
-      // 2. 직육면체 그래프 및 이론 확률 설정
-      // 직육면체 가중치 확률 계산 : 1,6번은 1/18(0.056), 2,3,4,5번은 4/18(0.222)
-      let cuboidTheoryProb = (chosenNum === 1 || chosenNum === 6) ? (1 / 18) : (4 / 18);
-      $('cuboidBarTheory').style.height = (cuboidTheoryProb * 300) + '%';
-      $('cuboidBarTheory').querySelector('.bar-value').textContent = cuboidTheoryProb.toFixed(3);
-
-      for(let i=1; i<=3; i++) {
-        let t = historyData.cuboid.totals[i-1];
-        let c = historyData.cuboid.chosens[i-1];
-        let ratio = t > 0 ? (c / t) : 0;
-        let barEl = $('cuboidBar' + i);
-        let valEl = $('cuboidVal' + i);
-        
-        valEl.textContent = ratio.toFixed(3);
-        barEl.style.height = Math.min(ratio * 300, 100) + '%';
-      }
+      // 직육면체 차수별 1~6 전체 스냅샷 그리기 순차 동기화
+      buildClusterChart('cuboidCluster1', stepStats.cuboid[0]);
+      buildClusterChart('cuboidCluster2', stepStats.cuboid[1]);
+      buildClusterChart('cuboidCluster3', stepStats.cuboid[2]);
     }
 
     async function downloadImage(captureId, title) {
@@ -741,7 +783,7 @@
         a.href = canvas.toDataURL('image/png');
         a.click();
       } catch (e) {
-        alert('스크린샷 캡처 및 이미지 다운로드 처리 중 실패했습니다.');
+        alert('스크린샷 저장 중 에러가 발생했습니다.');
       }
     }
 
