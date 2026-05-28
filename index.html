@@ -30,7 +30,7 @@
 
     main { max-width: 1220px; margin: 22px auto; padding: 0 14px 42px; }
 
-    /* 네비게이션 바 기능 활성화 */
+    /* 네비게이션 바 기능 */
     .progress { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; justify-content: center; }
     .step-pill { 
       background: #e0e6ed; 
@@ -62,7 +62,7 @@
       border: 1px solid rgba(0,0,0,0.03);
     }
 
-    /* 인풋 스핀 버튼(▲▼) 제거 가이드 적용 */
+    /* 인풋 스핀 버튼(▲▼) 제거 가이드 적용  */
     input[type="number"]::-webkit-outer-spin-button,
     input[type="number"]::-webkit-inner-spin-button {
       -webkit-appearance: none;
@@ -72,11 +72,11 @@
       -moz-appearance: textfield;
     }
 
-    /* 1. 개요 페이지 디자인 (부드러운 블루그레이) */
+    /* 1. 개요 페이지 디자인 */
     .theme-intro h2 { color: #3b5998; font-size: 24px; margin-top: 0; }
     .theme-intro .guide { background: #ebf2fa; border-left: 5px solid #4a6fa5; padding: 15px; border-radius: 12px; margin-bottom: 20px; font-weight: 500; }
     
-    /* 2. 정육면체 테마 (시원하고 직관적인 파란색 계열) */
+    /* 2. 정육면체 테마 (블루)  */
     .theme-cube h2, .theme-cube h3 { color: #2b6cb0; }
     .theme-cube .experiment-box { background: #f7fafc; border: 2px solid #e2e8f0; border-radius: 18px; }
     .theme-cube button { background: #3182ce; color: white; }
@@ -88,7 +88,7 @@
     .theme-cube .worksheet-header { border-bottom: 4px solid #3182ce; }
     .theme-cube th { background: #ebf8ff; color: #2b6cb0; }
 
-    /* 3. 직육면체 테마 (학생들이 흥미를 가질 만한 싱그러운 초록/그리너리 계열) */
+    /* 3. 직육면체 테마 (그리너리 초록)  */
     .theme-cuboid h2, .theme-cuboid h3 { color: #2f855a; }
     .theme-cuboid .experiment-box { background: #f0fff4; border: 2px solid #c6f6d5; border-radius: 18px; }
     .theme-cuboid button { background: #38a169; color: white; }
@@ -100,7 +100,7 @@
     .theme-cuboid .worksheet-header { border-bottom: 4px solid #38a169; }
     .theme-cuboid th { background: #e6fffa; color: #234e52; }
 
-    /* 4. 최종 정리 테마 (고급스러운 퍼플 계열) */
+    /* 4. 최종 정리 테마 (퍼플) */
     .theme-final h2, .theme-final h3 { color: #6b46c1; }
     .theme-final .worksheet-header { border-bottom: 4px solid #6b46c1; }
     .theme-final button#restartBtn { background: #e53e3e; }
@@ -108,7 +108,7 @@
     .theme-final button { background: #805ad5; }
     .theme-final button:hover { background: #6b46c1; }
 
-    /* 공통 요소 디자인 디테일 */
+    /* 공통 요소 디자인 */
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin-bottom: 15px; }
     .split { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 20px; align-items: start; }
     label { display: block; font-weight: bold; margin-bottom: 8px; color: #4a5568; }
@@ -131,8 +131,9 @@
     .small { color: #718096; font-size: 14px; margin-bottom: 8px; line-height: 1.5; }
     .hidden { display: none !important; }
 
+    /* 원본 이미지 태그 디자인 복구 및 유지 */
     .fixed-dice-image {
-      width: 100%; max-height: 160px; object-fit: contain; display: block; margin: 0 auto 16px; padding: 10px; background: white; border-radius: 16px; border: 1px solid #e2e8f0;
+      width: 100%; max-height: 190px; object-fit: contain; display: block; margin: 6px auto 16px; padding: 10px; background: white; border-radius: 18px; border: 1px solid #e2e8f0;
     }
     
     /* 애니메이션 공간 */
@@ -215,6 +216,9 @@
 
     <section id="pageCube" class="page hidden">
       <h2>2. 정육면체 주사위 실험</h2>
+      
+      <img class="fixed-dice-image" src="./dice-cube.png" alt="정육면체 주사위">
+      
       <div class="split">
         <div class="experiment-box">
           <h3>실험하기</h3>
@@ -254,7 +258,7 @@
           </div>
           
           <h3>실험 결과 기록</h3>
-          <div class="small">모든 차수에서 같은 주사위 눈을 사용합니다. 선택한 주사위 눈이 나온 횟수와 상대도수를 기약분수나 소수 형태로 직접 계산해서 입력하세요.</div>
+          <div class="small">모든 차수에서 같은 주사위 눈을 사용합니다. 선택한 주사위 눈이 나온 횟수와 상대도수를 기약분수로 직접 계산해서 입력하세요.</div>
           <table>
             <thead>
               <tr>
@@ -280,6 +284,9 @@
 
     <section id="pageCuboid" class="page hidden">
       <h2>3. 직육면체 주사위 실험</h2>
+      
+      <img class="fixed-dice-image" src="./dice-cuboid.png" alt="직육면체 주사위">
+      
       <div class="split">
         <div class="experiment-box">
           <h3>실험하기</h3>
@@ -319,7 +326,7 @@
           </div>
           
           <h3>실험 결과 기록</h3>
-          <div class="small">선택한 주사위 눈이 나온 횟수와 전체 던진 횟수를 보고, 상대도수를 직접 계산하여 기약분수나 소수로 적어보세요.</div>
+          <div class="small">선택한 주사위 눈이 나온 횟수와 전체 던진 횟수를 보고, 상대도수를 직접 계산하여 기약분수로 적어보세요.</div>
           <table>
             <thead>
               <tr>
@@ -404,17 +411,12 @@
       return true;
     }
 
-    // 네비게이션 및 테마 변경 기능 구현
     function goPage(index) {
-      if (index > 0 && !validateStudent()) {
-        return; 
-      }
+      if (index > 0 && !validateStudent()) { return; }
       
-      // 페이지 가시성 토글
       pages.forEach((p, i) => p.classList.toggle('hidden', i !== index));
       pills.forEach((p, i) => p.classList.toggle('active', i === index));
       
-      // 페이지별 맞춤형 개성 테마 반영
       bodyContainer.className = '';
       if (index === 0) bodyContainer.classList.add('theme-intro');
       else if (index === 1) bodyContainer.classList.add('theme-cube');
@@ -467,12 +469,12 @@
     async function runAdd(type) {
       const inputId = type === 'cube' ? 'cubeAddCount' : 'cuboidAddCount';
       const n = Number($(inputId).value);
-      if (!textCheckInteger(n) || n <= 0) { alert('던질 횟수를 1 이상의 정수로 정확히 입력해 주세요.'); return; }
+      if (!Number.isInteger(n) || n <= 0) { alert('던질 횟수를 1 이상의 정수로 정확히 입력해 주세요.'); return; }
       if (n > 10000) { alert('한 번에 던질 수 있는 최대 횟수는 10,000회입니다.'); return; }
 
       const spinner = type === 'cube' ? $('cubeSpinner') : $('cuboidSpinner');
       spinner.classList.remove('hidden');
-      await wait(800); // 중학생들이 지루해하지 않도록 애니메이션 속도 최적화
+      await wait(800);
 
       for (let i = 0; i < n; i++) {
         const result = type === 'cube' ? cubeResult() : cuboidResult();
@@ -483,21 +485,16 @@
       spinner.classList.add('hidden');
       $(inputId).value = '';
       
-      // 누적 총 횟수 텍스트 갱신
       if (type === 'cube') $('cubeTotalBox').textContent = `총 던진 횟수: ${cubeTotal}회`;
       else $('cuboidTotalBox').textContent = `총 던진 횟수: ${cuboidTotal}회`;
 
       renderCountGrid(type === 'cube' ? 'cubeCountGrid' : 'cuboidCountGrid', type === 'cube' ? cubeCounts : cuboidCounts);
     }
 
-    function textCheckInteger(num) {
-      return Number.isInteger(num);
-    }
-
     function cubeResult() { return Math.floor(Math.random() * 6) + 1; }
 
     function cuboidResult() {
-      const weights = [1, 4, 4, 4, 4, 1]; // 1, 6은 좁은 면(확률 낮음) / 2,3,4,5는 넓은 면(확률 높음)
+      const weights = [1, 4, 4, 4, 4, 1];
       const totalWeight = weights.reduce((a,b) => a + b, 0);
       let r = Math.random() * totalWeight;
       for (let i = 0; i < weights.length; i++) { r -= weights[i]; if (r < 0) return i + 1; }
@@ -506,15 +503,12 @@
 
     function wait(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
-    // 상대도수(소수점 계산) 표시 로직을 완벽히 제거하고 횟수만 랜더링
     function renderCountGrid(id, counts) {
       const box = $(id);
       box.innerHTML = '';
       counts.forEach((count, idx) => {
         const div = document.createElement('div');
         div.className = 'count-card';
-        div.innerHTML = `<div class="face">⚀⚁⚂⚃⚄⚅"[idx] ? '' : (idx + 1) + '번 눈'</div><div class="count">${count}회</div>`;
-        // 주사위 텍스트 직관적으로 변환
         let textMarker = (idx + 1) + "번 눈";
         div.innerHTML = `<div class="face">${textMarker}</div><div class="count">${count}회</div>`;
         box.appendChild(div);
@@ -571,7 +565,7 @@
         a.href = canvas.toDataURL('image/png');
         a.click();
       } catch (e) {
-        alert('이미지 스크린샷 저장 중 문제가 발생했습니다. 브라우저 권한을 확인해주세요.');
+        alert('이미지 스크린샷 저장 중 문제가 발생했습니다.');
       }
     }
 
