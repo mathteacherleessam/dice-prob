@@ -176,7 +176,7 @@
     .final-summary-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
 
     /* ----------------------------------------------------
-       교정 완료된 대수법칙 점-선 꺾은선 그래프 시스템 컴포넌트
+       차수별 전체 묶음 레이아웃 그래프 디자인
     ------------------------------------------------------- */
     .grand-chart-box {
       background: white;
@@ -202,7 +202,7 @@
       background: #f8fafc;
       border: 1px solid #edf2f7;
       border-radius: 14px;
-      padding: 14px 14px 14px 34px; /* 왼쪽에 절대눈금 영역 34px 고정확보 */
+      padding: 14px 14px 14px 38px; /* 왼쪽에 절대눈금 영역 공간 확보 */
       position: relative;
     }
     .cluster-title {
@@ -232,7 +232,7 @@
     /* 절대 좌표 기반 눈금 배치 (레이아웃 좌표 연산 방해 차단) */
     .y-axis-layer {
       position: absolute;
-      left: 6px;
+      left: 8px;
       top: 50px; /* 제목아래 프레임 상단 기준 정렬 */
       height: 240px;
       width: 25px;
@@ -592,7 +592,6 @@
 
     function $(id) { return document.getElementById(id); }
 
-    // 고정 축 가이드 전용 레이어 분리 렌더링 시스템
     function renderYAxisGuides(layerId) {
       const target = $(layerId);
       target.innerHTML = '';
@@ -600,7 +599,6 @@
       labels.forEach((text, idx) => {
         const item = document.createElement('div');
         item.className = 'y-axis-guide';
-        // 240px 프레임 내 60px 간격 절대좌표 배정
         item.style.top = (idx * 60) + 'px';
         item.textContent = text;
         target.appendChild(item);
@@ -782,9 +780,14 @@
       }
     }
 
-    // 완전히 격리 배치된 클러스터 차트 렌더링 파트
+    // 꺾은선 누적 현상 방지 패치가 이식된 드로잉 함수
     function buildClusterChart(frameId, dataSnapshot) {
       const frame = $(frameId);
+      
+      // [핵심 교정] 기존에 생성되어 남아있던 노후 SVG 엘리먼트를 확실하게 밀어버립니다.
+      const oldSvg = frame.querySelector('.svg-line-layer');
+      if (oldSvg) { oldSvg.remove(); }
+
       frame.innerHTML = '';
 
       const total = dataSnapshot.total;
@@ -808,7 +811,7 @@
         frame.appendChild(unit);
       }
 
-      // 오직 순수 점 데이터들의 위치 센터값만 추출하여 바인딩
+      // 점과 점 사이만 순수하게 이어주는 고정식 SVG 연동선 빌더
       setTimeout(() => {
         const dots = frame.querySelectorAll('.dot-plot-point');
         if (dots.length === 0 || total === 0) return;
